@@ -5,4 +5,3 @@ Methods for benchmarking isoform reconstruction using long reads. Our initial ef
 LR-benchmarking/IsoQuant_Derived_Bmark
 Benchmarking scripts based on that provided by IsoQuant at: https://github.com/ablab/IsoQuant/tree/master/misc 
 
-Workflows are available on Terra at: https://app.terra.bio/#workspaces/broad-firecloud-dsde-methods/LongReadRNABenchmark
