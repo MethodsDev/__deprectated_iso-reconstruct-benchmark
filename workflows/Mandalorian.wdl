@@ -25,13 +25,11 @@ task MandalorianTask {
         -G ~{referenceGenome} \
         -g ~{referenceAnnotation} \
         -f ~{inputBAM} \
-        -p ~{outputPrefix} &
-        
-        mv "~{outputPrefix}/Isoforms.filtered.clean.gtf" "~{outputPrefix}/~{datasetName}.Isoforms.filtered.clean.gtf"
+        -p ~{outputPrefix}
     >>>
 
     output {
-        File MandalorianGTF = "~{outputPrefix}/~{datasetName}.Isoforms.filtered.clean.gtf"
+        File MandalorianGTF = "~{outputPrefix}/Isoforms.filtered.clean.gtf"
         File monitoringLog = "monitoring.log"
     }
 
