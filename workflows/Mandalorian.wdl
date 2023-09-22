@@ -12,7 +12,7 @@ task MandalorianTask {
         Int numThreads = 32
         Int memoryGB = 128
         Int diskSizeGB = 500
-        String docker = "us-central1-docker.pkg.dev/methods-dev-lab/iso-reconstruct-benchmark/mandalorian@sha256:dadad67d95407ea936611a19928d127d658922eb6aea873f6bdb22f3e860cfa5"
+        String docker = "us-central1-docker.pkg.dev/methods-dev-lab/iso-reconstruct-benchmark/mandalorian@sha256:20e2d4d3f4e5e7b26e8a743624366f21d79b351dbcdbc975dc5f8a2e27f80db8"
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
