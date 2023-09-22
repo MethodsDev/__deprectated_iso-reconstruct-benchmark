@@ -14,7 +14,7 @@ task BambuTask {
         Int memoryGB = 256
         Int diskSizeGB = 500
         String docker = "us.gcr.io/broad-dsde-methods/kockan/bambu@sha256:109fcdec65637eaca9f465808f3cc2aba3a9d2a0b1f967b4ed1c87989c3969de"
-        File monitoringScript = ""gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh""
+        File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
     String bambuOutDir = "Bambu_out"
