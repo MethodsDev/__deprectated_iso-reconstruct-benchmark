@@ -18,7 +18,7 @@ task IsoQuantTask {
 
     String outputPrefix = if defined(referenceAnnotation) then "IsoQuant_out_~{datasetName}" else "IsoQuant_denovo_out_~{datasetName}"
     String completeGeneDBOption = if defined(referenceAnnotation) then "--complete_genedb" else ""
-
+    }
     command <<<
         bash ~{monitoringScript} > monitoring.log &
 
