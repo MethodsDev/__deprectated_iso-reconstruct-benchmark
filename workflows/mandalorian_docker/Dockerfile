@@ -30,3 +30,5 @@ RUN git clone https://github.com/christopher-vollmers/Mandalorion.git && \
 	chmod +x setup.sh && \
 	sh setup.sh && \
 	/usr/local/src/Mandalorion/Mando.py -h
+
+RUN mamba install -c bioconda samtools
