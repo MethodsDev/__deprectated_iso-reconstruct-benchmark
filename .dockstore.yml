@@ -34,3 +34,6 @@ workflows:
   - name: Mandalorian
     subclass: WDL
     primaryDescriptorPath: /workflows/Mandalorian.wdl
+  - name: IsoformDiscoveryBenchmark-test
+    subclass: WDL
+    primaryDescriptorPath: /workflows/IsoformDiscoveryBenchmark-test.wdl
