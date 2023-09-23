@@ -31,4 +31,11 @@ RUN git clone https://github.com/christopher-vollmers/Mandalorion.git && \
 	sh setup.sh && \
 	/usr/local/src/Mandalorion/Mando.py -h
 
-RUN mamba install -c bioconda samtools
+RUN wget https://github.com/samtools/samtools/releases/download/1.9/samtools-1.9.tar.bz2 && \
+	tar jxf samtools-1.9.tar.bz2 && \
+	rm samtools-1.9.tar.bz2 && \
+	cd samtools-1.9 && \
+	./configure --prefix $(pwd) && \
+	make
+
+ENV PATH=${PATH}:/usr/local/src/samtools-1.9
