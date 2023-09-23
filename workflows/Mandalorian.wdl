@@ -21,11 +21,15 @@ task MandalorianTask {
     command <<<
         bash ~{monitoringScript} > monitoring.log &
 
+        samtools bam2fq ~{inputBAM} > samtools.bam2fq.fastq
+
         /usr/local/src/Mandalorion/Mando.py \
         -G ~{referenceGenome} \
         -g ~{referenceAnnotation} \
-        -f ~{inputBAM} \
+        -f samtools.bam2fq.fastq \
         -p ~{outputPrefix}
+
+        rm samtools.bam2fq.fastq
     >>>
 
     output {
