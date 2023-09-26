@@ -11,7 +11,7 @@ task IsoSeqv2Task {
         Int numThreads = 32
         Int memoryGB = 256
         Int diskSizeGB = 500
-        String docker = "us-central1-docker.pkg.dev/methods-dev-lab/iso-reconstruct-benchmark/isoseqv2@sha256:6d19ef75f9da96a76b9db24f6191369e17765693da297a06f775b55c23c36393"
+        String docker = "us-central1-docker.pkg.dev/methods-dev-lab/iso-reconstruct-benchmark/isoseq-v2@sha256:6d19ef75f9da96a76b9db24f6191369e17765693da297a06f775b55c23c36393"
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
