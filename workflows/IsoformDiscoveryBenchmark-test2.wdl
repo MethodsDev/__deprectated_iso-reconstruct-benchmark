@@ -168,7 +168,7 @@ workflow LongReadRNABenchmark {
     Array[File] gtfListReduced = [Mandalorian.MandalorianGTF, IsoQuant.isoQuantGTF, IsoQuantv2.isoQuantv2GTF, StringTie.stringTieGTF, Bambu.bambuGTF, Flair.flairGTF, Talon.talonGTF, Flames.flamesGFF]
     Array[File] gtfListReferenceFree = [IsoQuantReferenceFree.isoQuantGTF, IsoQuantv2.isoQuantv2GTF, StringTieReferenceFree.stringTieGTF, IsoSeq.isoSeqGFF, IsoSeqv2.isoSeqv2GFF, Cupcake.cupcakeGFF]
     Array[String] toolNamesReduced = ["mandalorian", "isoquant", "isoquantv2", "stringtie", "bambu", "flair", "talon", "flames"]
-    Array[String] toolNamesReferenceFree = ["isoquant", "isoquantv2" "stringtie", "isoseq", "isoseqv2", "cupcake"]
+    Array[String] toolNamesReferenceFree = ["isoquant", "isoquantv2", "stringtie", "isoseq", "isoseqv2", "cupcake"]
 
     scatter(gtfAndTool in zip(gtfListReduced, toolNamesReduced)) {
         File gtf = gtfAndTool.left
