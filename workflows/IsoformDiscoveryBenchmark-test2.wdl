@@ -136,7 +136,7 @@ workflow LongReadRNABenchmark {
             datasetName = datasetName
     }
 
-        call IsoSeqv2Workflow.IsoSeqv2 as IsoSeqv2 {
+    call IsoSeqv2Workflow.IsoSeqv2 as IsoSeqv2 {
         input:
             inputBAM = inputBAM,
             inputBAMIndex = inputBAMIndex,
