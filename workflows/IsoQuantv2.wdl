@@ -29,7 +29,7 @@ task IsoQuantv2Task {
         --bam ~{inputBAM} \
         --data_type ~{dataType} \
         --threads ~{numThreads} \
-        --labels ~{datasetName} \
+        --prefix ~{datasetName} \
         --output ~{outputPrefix}
     >>>
 
