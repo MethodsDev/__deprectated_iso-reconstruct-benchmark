@@ -43,3 +43,6 @@ workflows:
   - name: IsoSeq-v2
     subclass: WDL
     primaryDescriptorPath: /workflows/IsoSeq-v2.wdl
+  - name: IsoformDiscoveryBenchmark-test2
+    subclass: WDL
+    primaryDescriptorPath: /workflows/IsoformDiscoveryBenchmark-test2.wdl
