@@ -1,6 +1,6 @@
 version 1.0
 
-task IsoQuant-v2Task {
+task IsoQuantv2Task {
     input {
         File inputBAM
         File inputBAMIndex
@@ -16,7 +16,7 @@ task IsoQuant-v2Task {
         String docker = "us-central1-docker.pkg.dev/methods-dev-lab/iso-reconstruct-benchmark/isoquant-v2@sha256:54d44e7ee5215d9a2dfcc985dad6fc15180f3cb29cf65568dcac8e8aeb087968"
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
 
-    String outputPrefix = if defined(referenceAnnotation) then "IsoQuant-v2_out_~{datasetName}" else "IsoQuant-v2_denovo_out_~{datasetName}"
+    String outputPrefix = if defined(referenceAnnotation) then "IsoQuantv2_out_~{datasetName}" else "IsoQuantv2_denovo_out_~{datasetName}"
     String completeGeneDBOption = if defined(referenceAnnotation) then "--complete_genedb" else ""
     }
     command <<<
@@ -34,7 +34,7 @@ task IsoQuant-v2Task {
     >>>
 
     output {
-        File isoQuant-v2GTF = "~{outputPrefix}/~{datasetName}/~{datasetName}.transcript_models.gtf"
+        File isoQuantv2GTF = "~{outputPrefix}/~{datasetName}/~{datasetName}.transcript_models.gtf"
         File monitoringLog = "monitoring.log"
     }
 
@@ -46,7 +46,7 @@ task IsoQuant-v2Task {
     }
 }
 
-workflow IsoQuant-v2 {
+workflow IsoQuantv2 {
     input {
         File inputBAM
         File inputBAMIndex
@@ -57,7 +57,7 @@ workflow IsoQuant-v2 {
         String dataType
     }
 
-    call IsoQuant-v2Task {
+    call IsoQuantv2Task {
         input:
             inputBAM = inputBAM,
             inputBAMIndex = inputBAMIndex,
@@ -69,7 +69,7 @@ workflow IsoQuant-v2 {
     }
 
     output {
-        File isoQuant-v2GTF = IsoQuant-v2Task.isoQuant-v2GTF
-        File monitoringLog = IsoQuant-v2Task.monitoringLog
+        File isoQuantv2GTF = IsoQuantv2Task.isoQuantv2GTF
+        File monitoringLog = IsoQuantv2Task.monitoringLog
     }
 }
