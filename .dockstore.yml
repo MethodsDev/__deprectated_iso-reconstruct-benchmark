@@ -37,3 +37,9 @@ workflows:
   - name: IsoformDiscoveryBenchmark-test
     subclass: WDL
     primaryDescriptorPath: /workflows/IsoformDiscoveryBenchmark-test.wdl
+  - name: IsoQuant-v2
+    subclass: WDL
+    primaryDescriptorPath: /workflows/IsoQuant-v2.wdl
+  - name: IsoSeq-v2
+    subclass: WDL
+    primaryDescriptorPath: /workflows/IsoSeq-v2.wdl
