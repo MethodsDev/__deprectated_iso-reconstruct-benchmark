@@ -1,6 +1,6 @@
 version 1.0
 
-task IsoSeq-v2Task {
+task IsoSeqv2Task {
     input {
         File inputBAM
         File inputBAMIndex
@@ -11,7 +11,7 @@ task IsoSeq-v2Task {
         Int numThreads = 32
         Int memoryGB = 256
         Int diskSizeGB = 500
-        String docker = "us-central1-docker.pkg.dev/methods-dev-lab/iso-reconstruct-benchmark/isoseq-v2@sha256:6d19ef75f9da96a76b9db24f6191369e17765693da297a06f775b55c23c36393"
+        String docker = "us-central1-docker.pkg.dev/methods-dev-lab/iso-reconstruct-benchmark/isoseqv2@sha256:6d19ef75f9da96a76b9db24f6191369e17765693da297a06f775b55c23c36393"
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
@@ -22,11 +22,11 @@ task IsoSeq-v2Task {
 
         pbmm2 align --num-threads ~{numThreads} --preset ISOSEQ --sort ~{referenceGenome} temp.fastq  pbmm_realigned.bam
 
-        isoseq3 collapse pbmm_realigned.bam "IsoSeq-v2_out_~{datasetName}.gff"
+        isoseq3 collapse pbmm_realigned.bam "IsoSeqv2_out_~{datasetName}.gff"
     >>>
 
     output {
-        File isoSeq-v2GFF = "IsoSeq-v2_out_~{datasetName}.gff"
+        File isoSeqv2GFF = "IsoSeqv2_out_~{datasetName}.gff"
         File monitoringLog = "monitoring.log"
     }
 
@@ -38,7 +38,7 @@ task IsoSeq-v2Task {
     }
 }
 
-workflow IsoSeq-v2 {
+workflow IsoSeqv2 {
     input {
         File inputBAM
         File inputBAMIndex
@@ -47,7 +47,7 @@ workflow IsoSeq-v2 {
         String datasetName
     }
 
-    call IsoSeq-v2Task {
+    call IsoSeqv2Task {
         input:
             inputBAM = inputBAM,
             inputBAMIndex = inputBAMIndex,
@@ -57,7 +57,7 @@ workflow IsoSeq-v2 {
     }
 
     output {
-        File isoSeq-v2GFF = IsoSeq-v2Task.isoSeq-v2GFF
-        File monitoringLog = IsoSeq-v2Task.monitoringLog
+        File isoSeqv2GFF = IsoSeqv2Task.isoSeqv2GFF
+        File monitoringLog = IsoSeqv2Task.monitoringLog
     }
 }
