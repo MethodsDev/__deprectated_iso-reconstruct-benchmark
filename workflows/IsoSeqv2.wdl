@@ -18,7 +18,7 @@ task IsoSeqv2Task {
     command <<<
         bash ~{monitoringScript} > monitoring.log &
 
-        samtools fastq ~{inputBAM} > temp.fastq
+        samtools bam2fq ~{inputBAM} > temp.fastq
 
         pbmm2 align --num-threads ~{numThreads} --preset ISOSEQ --sort ~{referenceGenome} temp.fastq  pbmm_realigned.bam
 
