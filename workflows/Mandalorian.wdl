@@ -22,7 +22,7 @@ task MandalorianTask {
         bash ~{monitoringScript} > monitoring.log &
 
         samtools bam2fq ~{inputBAM} > samtools.bam2fq.fastq
-        minimap2 -ax splice --splice-flank=no -t ~{numThreads} --cs=long -uf -C5 ~{referenceGenome} samtools.bam2fq.fastq > samtools.view.sam
+        /usr/local/src/Mandalorion/minimap2/minimap2 -ax splice --splice-flank=no -t ~{numThreads} --cs=long -uf -C5 ~{referenceGenome} samtools.bam2fq.fastq > samtools.view.sam
 
         samtools view -h -o samtools.view.sam ~{inputBAM}
 
