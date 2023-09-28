@@ -25,7 +25,8 @@ ENV BIN=/usr/local/bin
 
 WORKDIR $SRC
 
-RUN git clone https://github.com/christopher-vollmers/Mandalorion.git && \
+RUN git clone -b houlinyu-add_input_sam_option https://github.com/MethodsDev/Mandalorion-fork.git && \
+	mv Mandalorion-fork Mandalorion && \
 	cd Mandalorion && \
 	chmod +x setup.sh && \
 	sh setup.sh && \
