@@ -1,6 +1,6 @@
 version 1.0
 
-task MandalorianTask {
+task MandalorionTask {
     input {
         File inputBAM
         File inputBAMIndex
@@ -16,7 +16,7 @@ task MandalorianTask {
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
-    String outputPrefix = if defined(referenceAnnotation) then "Mandalorian_out_~{datasetName}" else "Mandalorian_denovo_out_~{datasetName}"
+    String outputPrefix = if defined(referenceAnnotation) then "Mandalorion_out_~{datasetName}" else "Mandalorion_denovo_out_~{datasetName}"
 
     command <<<
         bash ~{monitoringScript} > monitoring.log &
@@ -39,7 +39,7 @@ task MandalorianTask {
     >>>
 
     output {
-        File MandalorianGTF = "~{outputPrefix}/Isoforms.filtered.clean.gtf"
+        File MandalorionGTF = "~{outputPrefix}/Isoforms.filtered.clean.gtf"
         File monitoringLog = "monitoring.log"
     }
 
@@ -51,7 +51,7 @@ task MandalorianTask {
     }
 }
 
-workflow Mandalorian {
+workflow Mandalorion {
     input {
         File inputBAM
         File inputBAMIndex
@@ -61,7 +61,7 @@ workflow Mandalorian {
         String datasetName
     }
 
-    call MandalorianTask {
+    call MandalorionTask {
         input:
             inputBAM = inputBAM,
             inputBAMIndex = inputBAMIndex,
@@ -72,7 +72,7 @@ workflow Mandalorian {
     }
 
     output {
-        File MandalorianGTF = MandalorianTask.MandalorianGTF
-        File monitoringLog = MandalorianTask.monitoringLog
+        File MandalorionGTF = MandalorionTask.MandalorionGTF
+        File monitoringLog = MandalorionTask.monitoringLog
     }
 }
