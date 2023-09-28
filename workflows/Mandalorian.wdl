@@ -28,8 +28,9 @@ task MandalorianTask {
         -G ~{referenceGenome} \
         -g ~{referenceAnnotation} \
         -f samtools.bam2fq.fastq \
-        -p ~{outputPrefix}
+        -p ~{outputPrefix} \
         -s samtools.view.sam
+
         rm samtools.bam2fq.fastq
         rm samtools.view.sam
 
