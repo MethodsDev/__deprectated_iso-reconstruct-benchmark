@@ -22,16 +22,14 @@ task MandalorionTask {
         bash ~{monitoringScript} > monitoring.log &
 
         samtools bam2fq ~{inputBAM} > samtools.bam2fq.fastq
-        /usr/local/src/Mandalorion/minimap2/minimap2 -ax splice --splice-flank=no -t ~{numThreads} --cs=long -uf -C5 ~{referenceGenome} samtools.bam2fq.fastq > samtools.view.sam
-
-        samtools view -h -o samtools.view.sam ~{inputBAM}
+        /usr/local/src/Mandalorion/minimap2/minimap2 -G 400k --secondary=no -ax splice:hq --cs=long -uf -t ~{numThreads} ~{referenceGenome} samtools.bam2fq.fastq > samtools.view.sam
 
         /usr/local/src/Mandalorion/Mando.py \
         -G ~{referenceGenome} \
         -g ~{referenceAnnotation} \
         -f samtools.bam2fq.fastq \
         -p ~{outputPrefix} \
-        -s samtools.view.sam
+        -s samtools.view.bam
 
         rm samtools.bam2fq.fastq
         rm samtools.view.sam
