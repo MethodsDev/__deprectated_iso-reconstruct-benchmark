@@ -20,8 +20,7 @@ task MandalorionTask {
 
     command <<<
         bash ~{monitoringScript} > monitoring.log &
-
-        samtools bam2fq ~{inputBAM} > samtools.bam2fq.fastq
+        samtools fastq ~{inputBAM} > samtools.bam2fq.fastq
         /usr/local/src/Mandalorion/minimap2/minimap2 -G 400k --secondary=no -ax splice:hq --cs=long -uf -t ~{numThreads} ~{referenceGenome} samtools.bam2fq.fastq > samtools.view.sam
 
         /usr/local/src/Mandalorion/Mando.py \
