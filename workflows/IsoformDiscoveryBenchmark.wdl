@@ -1,6 +1,6 @@
 version 1.0
 
-import "Mandalorian.wdl" as MandalorianWorkflow
+import "Mandalorion.wdl" as MandalorionWorkflow
 import "IsoQuant.wdl" as IsoQuantWorkflow
 import "StringTie.wdl" as StringTieWorkflow
 import "Bambu.wdl" as BambuWorkflow
@@ -25,7 +25,7 @@ workflow LongReadRNABenchmark {
         String dataType
     }
 
-    call MandalorianWorkflow.Mandalorian as Mandalorian {
+    call MandalorionWorkflow.Mandalorion as Mandalorion {
         input:
             inputBAM = inputBAM,
             inputBAMIndex = inputBAMIndex,
@@ -130,9 +130,9 @@ workflow LongReadRNABenchmark {
 
     # Note: Make sure that your toolNames arrays match the order of your gtfList arrays.
     # If they don't match, you may not get an error but you will get incorrect results.
-    Array[File] gtfListReduced = [Mandalorian.MandalorianGTF, IsoQuant.isoQuantGTF, StringTie.stringTieGTF, Bambu.bambuGTF, Flair.flairGTF, Talon.talonGTF, Flames.flamesGFF]
+    Array[File] gtfListReduced = [Mandalorion.MandalorionGTF, IsoQuant.isoQuantGTF, StringTie.stringTieGTF, Bambu.bambuGTF, Flair.flairGTF, Talon.talonGTF, Flames.flamesGFF]
     Array[File] gtfListReferenceFree = [IsoQuantReferenceFree.isoQuantGTF, StringTieReferenceFree.stringTieGTF, IsoSeq.isoSeqGFF, Cupcake.cupcakeGFF]
-    Array[String] toolNamesReduced = ["mandalorian", "isoquant", "stringtie", "bambu", "flair", "talon", "flames"]
+    Array[String] toolNamesReduced = ["mandalorion", "isoquant", "stringtie", "bambu", "flair", "talon", "flames"]
     Array[String] toolNamesReferenceFree = ["isoquant", "stringtie", "isoseq", "cupcake"]
 
     scatter(gtfAndTool in zip(gtfListReduced, toolNamesReduced)) {
