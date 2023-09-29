@@ -16,7 +16,7 @@ task MandalorionTask {
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
-    outputPrefix = "Mandalorion_out_~{datasetName}" 
+    String outputPrefix = "Mandalorion_out_~{datasetName}" 
 
     command <<<
         bash ~{monitoringScript} > monitoring.log &
