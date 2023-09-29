@@ -27,7 +27,7 @@ task MandalorionTask {
         -g ~{referenceAnnotation} \
         -f samtools.bam2fq.fastq \
         -p {datasetName} \
-        -s samtools.view.bam
+        -s samtools.view.sam
 
         rm samtools.bam2fq.fastq
         rm samtools.view.sam
