@@ -17,7 +17,7 @@ task CupcakeTask {
     command <<<
         bash ~{monitoringScript} > monitoring.log &
 
-        samtools fastq ~{inputBAM} > temp.fastq
+        samtools bam2fq ~{inputBAM} > temp.fastq
 
         python3 /usr/local/src/remove_fastq_duplicates.py temp.fastq
 
