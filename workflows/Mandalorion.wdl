@@ -26,7 +26,7 @@ task MandalorionTask {
         -G ~{referenceGenome} \
         -g ~{referenceAnnotation} \
         -f samtools.bam2fq.fastq \
-        -p {datasetName} \
+        -p ~{datasetName} \
         -s samtools.view.sam
 
         rm samtools.bam2fq.fastq
@@ -35,7 +35,7 @@ task MandalorionTask {
     >>>
 
     output {
-        File MandalorionGTF = "{datasetName}/Isoforms.filtered.clean.gtf"
+        File MandalorionGTF = "~{datasetName}/Isoforms.filtered.clean.gtf"
         File monitoringLog = "monitoring.log"
     }
 
