@@ -213,12 +213,6 @@ workflow LongReadRNABenchmark {
             datasetName = datasetName
     }
 
-    call IsoformDiscoveryBenchmarkTasks.SummarizeDenovoAnalysis {
-        input:
-            trackingFile = GffCompareTrackDenovo.tracking,
-            toolNames = toolNamesReduced,
-            datasetName = datasetName
-    }
 
     call IsoformDiscoveryBenchmarkTasks.PlotAnalysisSummary as PlotAnalysisSummary {
         input:
@@ -232,6 +226,13 @@ workflow LongReadRNABenchmark {
             summary = SummarizeReferenceFreeAnalysis.summary,
             datasetName = datasetName,
             type = "reffree"
+    }
+
+    call IsoformDiscoveryBenchmarkTasks.SummarizeDenovoAnalysis {
+        input:
+            trackingFile = GffCompareTrackDenovo.tracking,
+            toolNames = toolNamesReduced,
+            datasetName = datasetName
     }
 
     call IsoformDiscoveryBenchmarkTasks.PlotDenovoAnalysisSummary as PlotDenovoAnalysisSummaryKnown {
@@ -251,10 +252,10 @@ workflow LongReadRNABenchmark {
     output {
         File analysisSummary = SummarizeAnalysis.summary
         File analysisSummaryReferenceFree = SummarizeReferenceFreeAnalysis.summary
-        File analysisSummaryDenovoKnown = SummarizeDenovoAnalysis.denovoSummaryKnown
-        File analysisSummaryDenovoNovel = SummarizeDenovoAnalysis.denovoSummaryNovel
         File analysisSummaryPlot = PlotAnalysisSummary.analysisSummaryPlot
         File referenceFreeAnalysisSummaryPlot = PlotAnalysisSummaryReferenceFree.analysisSummaryPlot
+        File analysisSummaryDenovoKnown = SummarizeDenovoAnalysis.denovoSummaryKnown
+        File analysisSummaryDenovoNovel = SummarizeDenovoAnalysis.denovoSummaryNovel
         File denovoAnalysisSummaryPlotKnown = PlotDenovoAnalysisSummaryKnown.denovoAnalysisSummaryPlot
         File denovoAnalysisSummaryPlotNovel = PlotDenovoAnalysisSummaryNovel.denovoAnalysisSummaryPlot
     }
