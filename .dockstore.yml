@@ -31,7 +31,7 @@ workflows:
   - name: IsoformDiscoveryBenchmarkTasks
     subclass: WDL
     primaryDescriptorPath: /workflows/IsoformDiscoveryBenchmarkTasks.wdl
-  - name: Mandalorian
+  - name: Mandalorion
     subclass: WDL
     primaryDescriptorPath: /workflows/Mandalorion.wdl
   - name: IsoformDiscoveryBenchmark-test
