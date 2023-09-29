@@ -51,4 +51,4 @@ workflows:
     primaryDescriptorPath: /workflows/IsoformDiscoveryBenchmark-test3.wdl
   - name: IsoformDiscoveryBenchmark-test4
     subclass: WDL
-    primaryDescriptorPath: /workflows/IsoformDiscoveryBenchmark-test3.wdl
+    primaryDescriptorPath: /workflows/IsoformDiscoveryBenchmark-test4.wdl
