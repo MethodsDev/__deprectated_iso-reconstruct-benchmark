@@ -166,7 +166,7 @@ workflow LongReadRNABenchmark {
     # Note: Make sure that your toolNames arrays match the order of your gtfList arrays.
     # If they don't match, you may not get an error but you will get incorrect results.
     Array[File] gtfListReduced = [Mandalorion.MandalorionGTF, IsoQuant.isoQuantGTF, IsoQuantv2.isoQuantv2GTF, StringTie.stringTieGTF, Bambu.bambuGTF, Flair.flairGTF, Talon.talonGTF, Flames.flamesGFF]
-    Array[File] gtfListReferenceFree = [IsoQuantReferenceFree.isoQuantGTF, IsoQuantv2.isoQuantv2GTF, StringTieReferenceFree.stringTieGTF, IsoSeq.isoSeqGFF, IsoSeqv2.isoSeqv2GFF, Cupcake.cupcakeGFF]
+    Array[File] gtfListReferenceFree = [IsoQuantReferenceFree.isoQuantGTF, IsoQuantv2ReferenceFree.isoQuantv2GTF, StringTieReferenceFree.stringTieGTF, IsoSeq.isoSeqGFF, IsoSeqv2.isoSeqv2GFF, Cupcake.cupcakeGFF]
     Array[String] toolNamesReduced = ["mandalorion", "isoquant", "isoquantv2", "stringtie", "bambu", "flair", "talon", "flames"]
     Array[String] toolNamesReferenceFree = ["isoquant", "isoquantv2", "stringtie", "isoseq", "isoseqv2", "cupcake"]
 
