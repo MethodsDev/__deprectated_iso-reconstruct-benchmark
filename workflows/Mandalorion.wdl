@@ -16,7 +16,7 @@ task MandalorionTask {
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
-    String outputPrefix = if defined(referenceAnnotation) then "Mandalorion_out_~{datasetName}" else "Mandalorion_denovo_out_~{datasetName}"
+    outputPrefix = "Mandalorion_out_~{datasetName}" 
 
     command <<<
         bash ~{monitoringScript} > monitoring.log &
