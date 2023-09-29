@@ -16,8 +16,6 @@ task MandalorionTask {
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
-    String outputPrefix = "Mandalorion_out_~{datasetName}" 
-
     command <<<
         bash ~{monitoringScript} > monitoring.log &
 
@@ -28,7 +26,7 @@ task MandalorionTask {
         -G ~{referenceGenome} \
         -g ~{referenceAnnotation} \
         -f samtools.bam2fq.fastq \
-        -p ~{outputPrefix} \
+        -p "Mandalorion_out_~{datasetName}" \
         -s samtools.view.bam
 
         rm samtools.bam2fq.fastq
@@ -37,7 +35,7 @@ task MandalorionTask {
     >>>
 
     output {
-        File MandalorionGTF = "~{outputPrefix}/Isoforms.filtered.clean.gtf"
+        File MandalorionGTF = "Mandalorion_out_~{datasetName}/Isoforms.filtered.clean.gtf"
         File monitoringLog = "monitoring.log"
     }
 
