@@ -21,7 +21,7 @@ task FlairTask {
     command <<<
         bash ~{monitoringScript} > monitoring.log &
 
-        samtools fastq ~{inputBAM} > "~{flairPrefix}_temp.fastq"
+        samtools bam2fq ~{inputBAM} > "~{flairPrefix}_temp.fastq"
 
         bam2Bed12 -i ~{inputBAM} > "~{flairPrefix}.bed"
 
