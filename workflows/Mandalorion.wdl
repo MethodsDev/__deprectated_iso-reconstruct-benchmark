@@ -6,7 +6,7 @@ task MandalorionTask {
         File inputBAMIndex
         File referenceGenome
         File referenceGenomeIndex
-        File? referenceAnnotation
+        File referenceAnnotation
         String datasetName
         Int cpu = 16
         Int numThreads = 32
