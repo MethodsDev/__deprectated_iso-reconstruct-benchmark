@@ -8,6 +8,7 @@ import "Flair.wdl" as FlairWorkflow
 import "IsoSeq.wdl" as IsoSeqWorkflow
 import "Flames.wdl" as FlamesWorkflow
 import "Cupcake.wdl" as CupcakeWorkflow
+import "Talon.wdl" as TalonWorkflow
 import "IsoformDiscoveryBenchmarkTasks.wdl" as IsoformDiscoveryBenchmarkTasks
 
 workflow LongReadRNABenchmark {
@@ -116,11 +117,23 @@ workflow LongReadRNABenchmark {
             datasetName = datasetName
     }
 
+    call TalonWorkflow.Talon as Talon {
+        input:
+            inputBAM = inputBAM,
+            inputBAMIndex = inputBAMIndex,
+            referenceGenome = referenceGenome,
+            referenceGenomeIndex = referenceGenomeIndex,
+            referenceAnnotation = referenceAnnotation,
+            datasetName = datasetName,
+            dataType = dataType
+    }
+
+    
     # Note: Make sure that your toolNames arrays match the order of your gtfList arrays.
     # If they don't match, you may not get an error but you will get incorrect results.
-    Array[File] gtfListReduced = [Mandalorion.MandalorionGTF, IsoQuant.isoQuantGTF, StringTie.stringTieGTF, Bambu.bambuGTF, Flair.flairGTF, Flames.flamesGFF]
+    Array[File] gtfListReduced = [Mandalorion.MandalorionGTF, IsoQuant.isoQuantGTF, StringTie.stringTieGTF, Bambu.bambuGTF, Flair.flairGTF, Talon.talonGTF, Flames.flamesGFF]
     Array[File] gtfListReferenceFree = [IsoQuantReferenceFree.isoQuantGTF, StringTieReferenceFree.stringTieGTF, IsoSeq.isoSeqGFF, Cupcake.cupcakeGFF]
-    Array[String] toolNamesReduced = ["mandalorion", "isoquant", "stringtie", "bambu", "flair", "flames"]
+    Array[String] toolNamesReduced = ["mandalorion", "isoquant", "stringtie", "bambu", "flair", "talon", "flames"]
     Array[String] toolNamesReferenceFree = ["isoquant", "stringtie", "isoseq", "cupcake"]
 
     scatter(gtfAndTool in zip(gtfListReduced, toolNamesReduced)) {
