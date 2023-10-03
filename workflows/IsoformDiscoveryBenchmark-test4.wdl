@@ -4,11 +4,8 @@ import "Mandalorion.wdl" as MandalorionWorkflow
 import "IsoQuant.wdl" as IsoQuantWorkflow
 import "IsoQuantv2.wdl" as IsoQuantv2Workflow
 import "StringTie.wdl" as StringTieWorkflow
-import "Bambu.wdl" as BambuWorkflow
-import "Flair.wdl" as FlairWorkflow
 import "IsoSeq.wdl" as IsoSeqWorkflow
 import "IsoSeqv2.wdl" as IsoSeqv2Workflow
-import "Flames.wdl" as FlamesWorkflow
 import "Cupcake.wdl" as CupcakeWorkflow
 import "IsoformDiscoveryBenchmarkTasks.wdl" as IsoformDiscoveryBenchmarkTasks
 
@@ -93,26 +90,6 @@ workflow LongReadRNABenchmark {
             datasetName = datasetName
     }
 
-    call BambuWorkflow.Bambu as Bambu {
-        input:
-            inputBAM = inputBAM,
-            inputBAMIndex = inputBAMIndex,
-            referenceGenome = referenceGenome,
-            referenceGenomeIndex = referenceGenomeIndex,
-            referenceAnnotation = referenceAnnotation,
-            datasetName = datasetName,
-            dataType = dataType
-    }
-
-    call FlairWorkflow.Flair as Flair {
-        input:
-            inputBAM = inputBAM,
-            inputBAMIndex = inputBAMIndex,
-            referenceGenome = referenceGenome,
-            referenceGenomeIndex = referenceGenomeIndex,
-            referenceAnnotation = referenceAnnotation,
-            datasetName = datasetName
-    }
 
 
     call IsoSeqv2Workflow.IsoSeqv2 as IsoSeqv2 {
@@ -134,15 +111,6 @@ workflow LongReadRNABenchmark {
     }
 
 
-    call FlamesWorkflow.Flames as Flames {
-        input:
-            inputBAM = inputBAM,
-            inputBAMIndex = inputBAMIndex,
-            referenceGenome = referenceGenome,
-            referenceGenomeIndex = referenceGenomeIndex,
-            referenceAnnotation = referenceAnnotation,
-            datasetName = datasetName
-    }
 
     call CupcakeWorkflow.Cupcake as Cupcake {
         input:
