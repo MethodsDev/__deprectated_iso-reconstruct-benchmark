@@ -27,8 +27,8 @@ task FlairTask {
 
         flair correct \
         -q "~{flairPrefix}.bed" \
-        -g ~{referenceGenome} \
-        -f ~{referenceAnnotation} \
+        --genome ~{referenceGenome} \
+        --gtf ~{referenceAnnotation} \
         -o ~{flairPrefix} \
         -t ~{numThreads}
 
