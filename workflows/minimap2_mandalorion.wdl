@@ -24,14 +24,13 @@ task MandalorionTask {
         /usr/local/src/Mandalorion/minimap2/minimap2 -u b -ax splice --splice-flank=no -uf -C5 --cs=long --junc-bed anno.bed -t ~{numThreads} ~{referenceGenome} samtools.bam2fq.fastq > samtools.view.sam
 
         rm samtools.bam2fq.fastq
-        rm samtools.view.sam
         rm anno.bed
         samtools view -bS samtools.view.sam > "~{inputBAM}"
-
+        rm samtools.view.sam
     >>>
 
     output {
-        File bamfile = "mm2_remapped.~{inputBAM}"
+        File bamfile = ""~{inputBAM}""
         File monitoringLog = "monitoring.log"
     }
 
