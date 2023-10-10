@@ -15,7 +15,7 @@ task FlamesTask {
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
-    String flamesOutDir = "flames_out"
+    String IsoscelesOutDir = "isosceles_out"
 
 
     command <<<
