@@ -8,7 +8,9 @@ import "Flair.wdl" as FlairWorkflow
 import "Talon.wdl" as TalonWorkflow
 import "IsoSeqv2.wdl" as IsoSeqv2Workflow
 import "Flames.wdl" as FlamesWorkflow
+import "Flamesv2.wdl" as Flamesv2Workflow
 import "Cupcake.wdl" as CupcakeWorkflow
+import "Isosceles.wdl" as IsoscelesWorkflow
 import "IsoformDiscoveryBenchmarkTasks.wdl" as IsoformDiscoveryBenchmarkTasks
 
 workflow LongReadRNABenchmark {
@@ -115,6 +117,16 @@ workflow LongReadRNABenchmark {
 
 
     call FlamesWorkflow.Flames as Flames {
+        input:
+            inputBAM = inputBAM,
+            inputBAMIndex = inputBAMIndex,
+            referenceGenome = referenceGenome,
+            referenceGenomeIndex = referenceGenomeIndex,
+            referenceAnnotation = referenceAnnotation,
+            datasetName = datasetName
+    }
+
+    call Flamesv2Workflow.Flamesv2 as Flamesv2 {
         input:
             inputBAM = inputBAM,
             inputBAMIndex = inputBAMIndex,
