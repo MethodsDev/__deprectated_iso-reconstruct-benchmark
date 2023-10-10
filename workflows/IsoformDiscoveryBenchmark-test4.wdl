@@ -1,11 +1,13 @@
 version 1.0
 
 import "Mandalorion.wdl" as MandalorionWorkflow
-import "IsoQuant.wdl" as IsoQuantWorkflow
 import "IsoQuantv2.wdl" as IsoQuantv2Workflow
 import "StringTie.wdl" as StringTieWorkflow
-import "IsoSeq.wdl" as IsoSeqWorkflow
+import "Bambu.wdl" as BambuWorkflow
+import "Flair.wdl" as FlairWorkflow
+import "Talon.wdl" as TalonWorkflow
 import "IsoSeqv2.wdl" as IsoSeqv2Workflow
+import "Flames.wdl" as FlamesWorkflow
 import "Cupcake.wdl" as CupcakeWorkflow
 import "IsoformDiscoveryBenchmarkTasks.wdl" as IsoformDiscoveryBenchmarkTasks
 
@@ -56,27 +58,6 @@ workflow LongReadRNABenchmark {
     }
 
 
-    call IsoQuantWorkflow.IsoQuant as IsoQuant {
-        input:
-            inputBAM = inputBAM,
-            inputBAMIndex = inputBAMIndex,
-            referenceGenome = referenceGenome,
-            referenceGenomeIndex = referenceGenomeIndex,
-            referenceAnnotation = referenceAnnotation,
-            datasetName = datasetName,
-            dataType = dataType
-    }
-
-    call IsoQuantWorkflow.IsoQuant as IsoQuantReferenceFree {
-        input:
-            inputBAM = inputBAM,
-            inputBAMIndex = inputBAMIndex,
-            referenceGenome = referenceGenome,
-            referenceGenomeIndex = referenceGenomeIndex,
-            datasetName = datasetName,
-            dataType = dataType
-    }
-
     call StringTieWorkflow.StringTie as StringTie {
         input:
             inputBAM = inputBAM,
@@ -90,6 +71,37 @@ workflow LongReadRNABenchmark {
             datasetName = datasetName
     }
 
+    call BambuWorkflow.Bambu as Bambu {
+        input:
+            inputBAM = inputBAM,
+            inputBAMIndex = inputBAMIndex,
+            referenceGenome = referenceGenome,
+            referenceGenomeIndex = referenceGenomeIndex,
+            referenceAnnotation = referenceAnnotation,
+            datasetName = datasetName,
+            dataType = dataType
+    }
+
+    call FlairWorkflow.Flair as Flair {
+        input:
+            inputBAM = inputBAM,
+            inputBAMIndex = inputBAMIndex,
+            referenceGenome = referenceGenome,
+            referenceGenomeIndex = referenceGenomeIndex,
+            referenceAnnotation = referenceAnnotation,
+            datasetName = datasetName
+    }
+
+    call TalonWorkflow.Talon as Talon {
+        input:
+            inputBAM = inputBAM,
+            inputBAMIndex = inputBAMIndex,
+            referenceGenome = referenceGenome,
+            referenceGenomeIndex = referenceGenomeIndex,
+            referenceAnnotation = referenceAnnotation,
+            datasetName = datasetName,
+            dataType = dataType
+    }
 
 
     call IsoSeqv2Workflow.IsoSeqv2 as IsoSeqv2 {
@@ -101,16 +113,16 @@ workflow LongReadRNABenchmark {
             datasetName = datasetName
     }
 
-    call IsoSeqWorkflow.IsoSeq as IsoSeq {
+
+    call FlamesWorkflow.Flames as Flames {
         input:
             inputBAM = inputBAM,
             inputBAMIndex = inputBAMIndex,
             referenceGenome = referenceGenome,
             referenceGenomeIndex = referenceGenomeIndex,
+            referenceAnnotation = referenceAnnotation,
             datasetName = datasetName
     }
-
-
 
     call CupcakeWorkflow.Cupcake as Cupcake {
         input:
@@ -121,10 +133,10 @@ workflow LongReadRNABenchmark {
 
     # Note: Make sure that your toolNames arrays match the order of your gtfList arrays.
     # If they don't match, you may not get an error but you will get incorrect results.
-    Array[File] gtfListReduced = [Mandalorion.MandalorionGTF, IsoQuant.isoQuantGTF, IsoQuantv2.isoQuantv2GTF, StringTie.stringTieGTF]
-    Array[File] gtfListReferenceFree = [IsoQuantReferenceFree.isoQuantGTF, IsoQuantv2ReferenceFree.isoQuantv2GTF, StringTieReferenceFree.stringTieGTF, IsoSeq.isoSeqGFF, IsoSeqv2.isoSeqv2GFF, Cupcake.cupcakeGFF]
-    Array[String] toolNamesReduced = ["mandalorion", "isoquant", "isoquantv2", "stringtie"]
-    Array[String] toolNamesReferenceFree = ["isoquant", "isoquantv2", "stringtie", "isoseq", "isoseqv2", "cupcake"]
+    Array[File] gtfListReduced = [Mandalorion.MandalorionGTF, IsoQuantv2.isoQuantv2GTF, StringTie.stringTieGTF, Bambu.bambuGTF, Flair.flairGTF, Talon.talonGTF, Flames.flamesGFF]
+    Array[File] gtfListReferenceFree = [IsoQuantv2ReferenceFree.isoQuantv2GTF, StringTieReferenceFree.stringTieGTF, IsoSeqv2.isoSeqv2GFF, Cupcake.cupcakeGFF]
+    Array[String] toolNamesReduced = ["mandalorion_v4.3.0", "isoquant_v3.3.0", "stringtie_v2.2.1", "bambu", "flair", "talon_v5.0", "flames"]
+    Array[String] toolNamesReferenceFree = ["isoquant_v3.3.0", "stringtie_v2.2.1", "isoseq_v4.0.0", "cupcake"]
 
     scatter(gtfAndTool in zip(gtfListReduced, toolNamesReduced)) {
         File gtf = gtfAndTool.left
@@ -184,35 +196,10 @@ workflow LongReadRNABenchmark {
             type = "reffree"
     }
 
-    call IsoformDiscoveryBenchmarkTasks.SummarizeDenovoAnalysis {
-        input:
-            trackingFile = GffCompareTrackDenovo.tracking,
-            toolNames = toolNamesReduced,
-            datasetName = datasetName
-    }
-
-    call IsoformDiscoveryBenchmarkTasks.PlotDenovoAnalysisSummary as PlotDenovoAnalysisSummaryKnown {
-        input:
-            denovoSummary = SummarizeDenovoAnalysis.denovoSummaryKnown,
-            datasetName = datasetName,
-            type = "known"
-    }
-
-    call IsoformDiscoveryBenchmarkTasks.PlotDenovoAnalysisSummary as PlotDenovoAnalysisSummaryNovel {
-        input:
-            denovoSummary = SummarizeDenovoAnalysis.denovoSummaryNovel,
-            datasetName = datasetName,
-            type = "novel"
-    }
-
     output {
         File analysisSummary = SummarizeAnalysis.summary
         File analysisSummaryReferenceFree = SummarizeReferenceFreeAnalysis.summary
         File analysisSummaryPlot = PlotAnalysisSummary.analysisSummaryPlot
         File referenceFreeAnalysisSummaryPlot = PlotAnalysisSummaryReferenceFree.analysisSummaryPlot
-        File analysisSummaryDenovoKnown = SummarizeDenovoAnalysis.denovoSummaryKnown
-        File analysisSummaryDenovoNovel = SummarizeDenovoAnalysis.denovoSummaryNovel
-        File denovoAnalysisSummaryPlotKnown = PlotDenovoAnalysisSummaryKnown.denovoAnalysisSummaryPlot
-        File denovoAnalysisSummaryPlotNovel = PlotDenovoAnalysisSummaryNovel.denovoAnalysisSummaryPlot
     }
 }
