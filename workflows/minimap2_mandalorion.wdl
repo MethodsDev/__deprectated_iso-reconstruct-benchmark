@@ -25,12 +25,12 @@ task MandalorionTask {
 
         rm samtools.bam2fq.fastq
         rm anno.bed
-        samtools view -bS samtools.view.sam > "~{inputBAM}"
+        samtools view -bS samtools.view.sam > ~{inputBAM}
         rm samtools.view.sam
     >>>
 
     output {
-        File bamfile = ""~{inputBAM}""
+        File bamfile = ~{inputBAM}
         File monitoringLog = "monitoring.log"
     }
 
