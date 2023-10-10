@@ -143,6 +143,17 @@ workflow LongReadRNABenchmark {
             datasetName = datasetName
     }
 
+    call IsoscelesWorkflow.Isosceles as Isosceles {
+        input:
+            inputBAM = inputBAM,
+            inputBAMIndex = inputBAMIndex,
+            referenceGenome = referenceGenome,
+            referenceGenomeIndex = referenceGenomeIndex,
+            referenceAnnotation = referenceAnnotation,
+            datasetName = datasetName
+    }
+
+
     # Note: Make sure that your toolNames arrays match the order of your gtfList arrays.
     # If they don't match, you may not get an error but you will get incorrect results.
     Array[File] gtfListReduced = [Mandalorion.MandalorionGTF, IsoQuantv2.isoQuantv2GTF, StringTie.stringTieGTF, Bambu.bambuGTF, Flair.flairGTF, Talon.talonGTF, Flames.flamesGFF]
