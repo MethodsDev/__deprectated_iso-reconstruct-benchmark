@@ -7,9 +7,9 @@ workflows:
   - name: IsoQuant
     subclass: WDL
     primaryDescriptorPath: /workflows/IsoQuant.wdl
-  - name: IsoQuant-v2
+  - name: IsoQuantv2
     subclass: WDL
-    primaryDescriptorPath: /workflows/IsoQuant-v2.wdl
+    primaryDescriptorPath: /workflows/IsoQuantv2.wdl
   - name: StringTie
     subclass: WDL
     primaryDescriptorPath: /workflows/StringTie.wdl
@@ -25,9 +25,9 @@ workflows:
   - name: IsoSeq
     subclass: WDL
     primaryDescriptorPath: /workflows/IsoSeq.wdl
-  - name: IsoSeq-v2
+  - name: IsoSeqv2
     subclass: WDL
-    primaryDescriptorPath: /workflows/IsoSeq-v2.wdl
+    primaryDescriptorPath: /workflows/IsoSeqv2.wdl
   - name: Flames
     subclass: WDL
     primaryDescriptorPath: /workflows/Flames.wdl
