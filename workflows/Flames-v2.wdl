@@ -1,6 +1,6 @@
 version 1.0
 
-task FlamesTask {
+task Flames-v2Task {
     input {
         File inputBAM
         File inputBAMIndex
@@ -15,20 +15,20 @@ task FlamesTask {
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
-    String flamesOutDir = "flames_out"
+    String flames-v2OutDir = "flames-v2_out"
 
 
     command <<<
         bash ~{monitoringScript} > monitoring.log &
 
 
-        mkdir ~{flamesOutDir}
+        mkdir ~{flames-v2OutDir}
 
         Rscript -<< "EOF"
         library(FLAMES)
         genome_fa <- "~{referenceGenome}"
         annotation <- "~{referenceAnnotation}"
-        outdir <- ~{flamesOutDir}
+        outdir <- ~{flames-v2OutDir}
         config_file <- FLAMES::create_config(outdir)
         config <- jsonlite::fromJSON(config_file)
         find_isoform(annotation = annotation, genome_fa = genome_fa, genome_bam = genome_bam, outdir = outdir, config = config)
@@ -37,8 +37,8 @@ task FlamesTask {
     >>>
 
     output {
-        File flamesGFF = "~{flamesOutDir}/isoform_annotated.filtered.gff3"
-        File monitoringLog = "~{flamesOutDir}/monitoring.log"
+        File flames-v2GFF = "~{flames-v2OutDir}/isoform_annotated.filtered.gff3"
+        File monitoringLog = "~{flames-v2OutDir}/monitoring.log"
     }
 
     runtime {
@@ -49,7 +49,7 @@ task FlamesTask {
     }
 }
 
-workflow Flames {
+workflow Flames-v2 {
     input {
         File inputBAM
         File inputBAMIndex
@@ -59,7 +59,7 @@ workflow Flames {
         String datasetName
     }
 
-    call FlamesTask {
+    call Flames-v2Task {
         input:
             inputBAM = inputBAM,
             inputBAMIndex = inputBAMIndex,
@@ -70,7 +70,7 @@ workflow Flames {
     }
 
     output {
-        File flamesGFF = FlamesTask.flamesGFF
-        File monitoringLog = FlamesTask.monitoringLog
+        File flames-v2GFF = Flames-v2Task.flames-v2GFF
+        File monitoringLog = Flames-v2Task.monitoringLog
     }
 }
