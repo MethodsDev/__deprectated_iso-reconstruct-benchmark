@@ -1,6 +1,6 @@
 version 1.0
 
-task FlamesTask {
+task IsoscelesTask {
     input {
         File inputBAM
         File inputBAMIndex
@@ -60,7 +60,7 @@ task FlamesTask {
     >>>
 
     output {
-        File flamesGFF = "~{IsoscelesOutDir}/isoform_annotated.gtf"
+        File isoscelesTaskGFF = "~{IsoscelesOutDir}/isoform_annotated.gtf"
         File monitoringLog = "~{IsoscelesOutDir}/monitoring.log"
     }
 
@@ -72,7 +72,7 @@ task FlamesTask {
     }
 }
 
-workflow Flames {
+workflow Isosceles {
     input {
         File inputBAM
         File inputBAMIndex
@@ -82,7 +82,7 @@ workflow Flames {
         String datasetName
     }
 
-    call FlamesTask {
+    call IsoscelesTask {
         input:
             inputBAM = inputBAM,
             inputBAMIndex = inputBAMIndex,
@@ -93,7 +93,7 @@ workflow Flames {
     }
 
     output {
-        File flamesGFF = FlamesTask.flamesGFF
-        File monitoringLog = FlamesTask.monitoringLog
+        File isoscelesGFF = IsoscelesTask.isoscelesGFF
+        File monitoringLog = IsoscelesTask.monitoringLog
     }
 }
