@@ -13,7 +13,7 @@ task BambuTask {
         Int numThreads = 32
         Int memoryGB = 256
         Int diskSizeGB = 500
-        String docker = "us.gcr.io/broad-dsde-methods/kockan/bambu@sha256:109fcdec65637eaca9f465808f3cc2aba3a9d2a0b1f967b4ed1c87989c3969de"
+        String docker = "us-central1-docker.pkg.dev/methods-dev-lab/iso-reconstruct-benchmark/bambu@sha256:a313fb49374fca63a180e9260426011adb7dd76a2641b70acdf85f8be05c7777"
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
