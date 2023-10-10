@@ -60,7 +60,7 @@ task IsoscelesTask {
     >>>
 
     output {
-        File isoscelesTaskGFF = "~{IsoscelesOutDir}/isoform_annotated.gtf"
+        File isoscelesTaskGTF = "~{IsoscelesOutDir}/isoform_annotated.gtf"
         File monitoringLog = "~{IsoscelesOutDir}/monitoring.log"
     }
 
@@ -93,7 +93,7 @@ workflow Isosceles {
     }
 
     output {
-        File isoscelesGFF = IsoscelesTask.isoscelesGFF
+        File isoscelesGTF = IsoscelesTask.isoscelesGTF
         File monitoringLog = IsoscelesTask.monitoringLog
     }
 }
