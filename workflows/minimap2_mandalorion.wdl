@@ -20,12 +20,13 @@ task MandalorionTask {
         bash ~{monitoringScript} > monitoring.log &
 
         samtools bam2fq ~{inputBAM} > samtools.bam2fq.fastq
-        /usr/local/src/Mandalorion/minimap2/mpaftools.js gff2bed ~{referenceAnnotation} > anno.bed
+        /usr/local/src/Mandalorion/minimap2/misc gff2bed ~{referenceAnnotation} > anno.bed
         /usr/local/src/Mandalorion/minimap2/minimap2 -u b -ax splice --splice-flank=no -uf -C5 --cs=long --junc-bed anno.bed -t ~{numThreads} ~{referenceGenome} samtools.bam2fq.fastq > samtools.view.sam
 
         rm samtools.bam2fq.fastq
         rm samtools.view.sam
-        samtools view -bS samtools.view.sam > "mm2_remapped.~{inputBAM}"
+        rm anno.bed
+        samtools view -bS samtools.view.sam > "~{inputBAM}"
 
     >>>
 
