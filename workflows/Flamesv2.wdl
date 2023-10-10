@@ -11,7 +11,7 @@ task Flamesv2Task {
         Int cpu = 16
         Int memoryGB = 256
         Int diskSizeGB = 500
-        String docker = "us.gcr.io/broad-dsde-methods/kockan/flames@sha256:e9b5d5152179e1a820afde3b147586a8ce7440738bf456af74b22ca4cfa0e8cb"
+        String docker = "us-central1-docker.pkg.dev/methods-dev-lab/iso-reconstruct-benchmark/flames-v2@sha256:4f5cbb9efb2a8218224cd10df003c6281d62001025792b825539b0b73088dd82"
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
