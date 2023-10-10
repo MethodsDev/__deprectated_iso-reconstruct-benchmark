@@ -7,6 +7,9 @@ workflows:
   - name: IsoQuant
     subclass: WDL
     primaryDescriptorPath: /workflows/IsoQuant.wdl
+  - name: IsoQuant-v2
+    subclass: WDL
+    primaryDescriptorPath: /workflows/IsoQuant-v2.wdl
   - name: StringTie
     subclass: WDL
     primaryDescriptorPath: /workflows/StringTie.wdl
@@ -22,9 +25,15 @@ workflows:
   - name: IsoSeq
     subclass: WDL
     primaryDescriptorPath: /workflows/IsoSeq.wdl
+  - name: IsoSeq-v2
+    subclass: WDL
+    primaryDescriptorPath: /workflows/IsoSeq-v2.wdl
   - name: Flames
     subclass: WDL
     primaryDescriptorPath: /workflows/Flames.wdl
+  - name: Flamesv2
+    subclass: WDL
+    primaryDescriptorPath: /workflows/Flamesv2.wdl
   - name: Cupcake
     subclass: WDL
     primaryDescriptorPath: /workflows/Cupcake.wdl
@@ -37,12 +46,6 @@ workflows:
   - name: IsoformDiscoveryBenchmark-test
     subclass: WDL
     primaryDescriptorPath: /workflows/IsoformDiscoveryBenchmark-test.wdl
-  - name: IsoQuant-v2
-    subclass: WDL
-    primaryDescriptorPath: /workflows/IsoQuant-v2.wdl
-  - name: IsoSeq-v2
-    subclass: WDL
-    primaryDescriptorPath: /workflows/IsoSeq-v2.wdl
   - name: IsoformDiscoveryBenchmark-test2
     subclass: WDL
     primaryDescriptorPath: /workflows/IsoformDiscoveryBenchmark-test2.wdl
