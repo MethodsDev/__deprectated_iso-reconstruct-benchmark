@@ -27,9 +27,9 @@ task IsoscelesTask {
         Rscript -<< "EOF"
         library(Isosceles)
 
-        bam_file <- ~{inputBAM}
-        gtf_file <- ~{referenceAnnotation}
-        genome_fasta_file <- ~{referenceGenome}
+        bam_file <- "~{inputBAM}"
+        gtf_file <- "~{referenceAnnotation}"
+        genome_fasta_file <- "~{referenceGenome}"
         
         bam_files <- c(Sample = bam_file)
         bam_parsed <- extract_read_structures(bam_files = bam_files)
