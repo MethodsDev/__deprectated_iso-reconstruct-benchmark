@@ -20,7 +20,7 @@ task FlamesTask {
 
         mkdir fq
 
-        samtools fastq ~{inputBAM} > ./fq/temp.fastq
+        samtools bam2fq ~{inputBAM} > ./fq/temp.fastq
 
         python3 /usr/local/src/FLAMES/python/bulk_long_pipeline.py \
         --gff3 ~{referenceAnnotation} \
