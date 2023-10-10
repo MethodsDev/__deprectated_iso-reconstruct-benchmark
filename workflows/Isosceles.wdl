@@ -11,7 +11,7 @@ task IsoscelesTask {
         Int cpu = 16
         Int memoryGB = 256
         Int diskSizeGB = 500
-        String docker = "us-central1-docker.pkg.dev/methods-dev-lab/iso-reconstruct-benchmark/isosceles@sha256:03c87b5286c674dd2568c6764338d97ff3705a862012a109e6274c8c5c527fa9"
+        String docker = "us-central1-docker.pkg.dev/methods-dev-lab/iso-reconstruct-benchmark/isosceles@sha256:f4e412b901dfb5a20da2c1aded7d66e2ca9e95e0291d20cd8bf21c70ec9fddb8"
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
