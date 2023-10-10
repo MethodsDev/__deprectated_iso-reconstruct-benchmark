@@ -54,7 +54,7 @@ ENV BIN=/usr/local/bin
 
 WORKDIR $SRC
 
-ARG R_VERSION="4.2.3"
+ARG R_VERSION="4.3.0"
 
 RUN curl -O https://cdn.rstudio.com/r/ubuntu-2004/pkgs/r-${R_VERSION}_1_amd64.deb
 
