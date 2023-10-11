@@ -15,14 +15,9 @@ task IsoscelesTask {
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
-    String IsoscelesOutDir = "isosceles_out"
-
 
     command <<<
         bash ~{monitoringScript} > monitoring.log &
-
-
-        mkdir ~{IsoscelesOutDir}
 
         Rscript -<< "EOF"
         library(Isosceles)
@@ -33,35 +28,17 @@ task IsoscelesTask {
         
         bam_files <- c(Sample = bam_file)
         bam_parsed <- extract_read_structures(bam_files = bam_files)
-        transcript_data <- prepare_transcripts(
-            gtf_file = gtf_file,
-            genome_fasta_file = genome_fasta_file,
-            bam_parsed = bam_parsed,
-            min_bam_splice_read_count = 2,
-            min_bam_splice_fraction = 0.01
-        )
-
-        se_tcc <- prepare_tcc_se(
-            bam_files = bam_files,
-            transcript_data = transcript_data,
-            run_mode = "de_novo_loose",
-            min_read_count = 1,
-            min_relative_expression = 0
-        )
-
-        se_transcript <- prepare_transcript_se(
-            se_tcc = se_tcc,
-            use_length_normalization = TRUE
-        )
-
-        export_gtf(se_transcript, "~{IsoscelesOutDir}/isoform_annotated.gtf")
+        transcript_data <- prepare_transcripts(gtf_file = gtf_file, genome_fasta_file = genome_fasta_file, bam_parsed = bam_parsed, min_bam_splice_read_count = 2, min_bam_splice_fraction = 0.01)
+        se_tcc <- prepare_tcc_se(bam_files = bam_files, transcript_data = transcript_data, run_mode = "de_novo_loose", min_read_count = 1, min_relative_expression = 0)
+        se_transcript <- prepare_transcript_se(se_tcc = se_tcc, use_length_normalization = TRUE)
+        export_gtf(se_transcript, "isoform_annotated.gtf")
         EOF
 
     >>>
 
     output {
-        File isoscelesGTF = "~{IsoscelesOutDir}/isoform_annotated.gtf"
-        File monitoringLog = "~{IsoscelesOutDir}/monitoring.log"
+        File isoscelesGTF = "isoform_annotated.gtf"
+        File monitoringLog = "monitoring.log"
     }
 
     runtime {
