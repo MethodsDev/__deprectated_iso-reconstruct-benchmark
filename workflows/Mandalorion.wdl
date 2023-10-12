@@ -54,7 +54,7 @@ workflow Mandalorion {
         File inputBAMIndex
         File referenceGenome
         File referenceGenomeIndex
-        File referenceAnnotation
+        File? referenceAnnotation
         String datasetName
     }
 
