@@ -15,10 +15,11 @@ task IsoQuantTask {
         Int diskSizeGB = 500
         String docker = "us.gcr.io/broad-dsde-methods/kockan/isoquant@sha256:9bd8cd8c3a04e02599e10e0b484127fb763a39499302d4c859d230942f9a2d15"
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
+    }
 
     String outputPrefix = if defined(referenceAnnotation) then "IsoQuant_out_~{datasetName}" else "IsoQuant_denovo_out_~{datasetName}"
     String completeGeneDBOption = if defined(referenceAnnotation) then "--complete_genedb" else ""
-    }
+    
     command <<<
         bash ~{monitoringScript} > monitoring.log &
 
