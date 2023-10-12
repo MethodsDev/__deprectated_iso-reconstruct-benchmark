@@ -25,7 +25,7 @@ task MandalorionTask {
 
         /usr/local/src/Mandalorion/Mando.py \
         -G ~{referenceGenome} \
-        ~{"g" + referenceAnnotation} \
+        ~{"-g " + referenceAnnotation} \
         -f samtools.bam2fq.fastq \
         -p ~{datasetName} \
         -s samtools.view.sam
