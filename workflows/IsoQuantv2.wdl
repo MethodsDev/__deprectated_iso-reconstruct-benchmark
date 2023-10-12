@@ -15,10 +15,11 @@ task IsoQuantv2Task {
         Int diskSizeGB = 500
         String docker = "us-central1-docker.pkg.dev/methods-dev-lab/iso-reconstruct-benchmark/isoquant-v2@sha256:54d44e7ee5215d9a2dfcc985dad6fc15180f3cb29cf65568dcac8e8aeb087968"
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
+    }
 
     String outputPrefix = if defined(referenceAnnotation) then "IsoQuantv2_out_~{datasetName}" else "IsoQuantv2_denovo_out_~{datasetName}"
     String completeGeneDBOption = if defined(referenceAnnotation) then "--complete_genedb" else ""
-    }
+    
     command <<<
         bash ~{monitoringScript} > monitoring.log &
 
