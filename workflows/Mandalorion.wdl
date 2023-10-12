@@ -16,6 +16,7 @@ task MandalorionTask {
         File monitoringScript = "gs://ctat_genome_libs/terra_scripts/cromwell_monitoring_script2.sh"
     }
 
+
     command <<<
         bash ~{monitoringScript} > monitoring.log &
 
@@ -24,7 +25,7 @@ task MandalorionTask {
 
         /usr/local/src/Mandalorion/Mando.py \
         -G ~{referenceGenome} \
-        -g ~{referenceAnnotation} \
+        ~{"g" + referenceAnnotation} \
         -f samtools.bam2fq.fastq \
         -p ~{datasetName} \
         -s samtools.view.sam
