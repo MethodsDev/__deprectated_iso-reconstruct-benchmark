@@ -21,7 +21,7 @@ task MandalorionTask {
 
         samtools bam2fq ~{inputBAM} > samtools.bam2fq.fastq
         /usr/local/src/Mandalorion/minimap2/misc/paftools.js gff2bed ~{referenceAnnotation} > anno.bed
-        /usr/local/src/Mandalorion/minimap2/minimap2 --secondary=no -u b -ax splice --splice-flank=no -uf -C5 --cs=long --junc-bed anno.bed -t ~{numThreads} ~{referenceGenome} samtools.bam2fq.fastq > samtools.view.sam
+        /usr/local/src/Mandalorion/minimap2/minimap2 --secondary=no -uf -ax splice:hq --cs=long --junc-bed anno.bed -t ~{numThreads} ~{referenceGenome} samtools.bam2fq.fastq > samtools.view.sam
 
         rm samtools.bam2fq.fastq
         rm anno.bed
