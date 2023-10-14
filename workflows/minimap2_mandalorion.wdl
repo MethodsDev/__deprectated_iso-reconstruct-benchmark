@@ -21,7 +21,7 @@ task MandalorionTask {
 
         samtools bam2fq ~{inputBAM} > samtools.bam2fq.fastq
 
-        /usr/local/src/Mandalorion/utils/removePolyA.py -i samtools.bam2fq.fastq -o samtools.bam2fq.noPolyA.fastq -t 0,0
+        python3 /usr/local/src/Mandalorion/utils/removePolyA.py -i samtools.bam2fq.fastq -o samtools.bam2fq.noPolyA.fastq -t 0,0
 
         /usr/local/src/Mandalorion/minimap2/misc/paftools.js gff2bed ~{referenceAnnotation} > anno.bed
         /usr/local/src/Mandalorion/minimap2/minimap2 -G 400k --secondary=no -uf -ax splice:hq --cs=long --junc-bed anno.bed -t ~{numThreads} ~{referenceGenome} samtools.bam2fq.noPolyA.fastq > samtools.view.sam
