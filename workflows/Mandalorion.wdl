@@ -23,7 +23,7 @@ task MandalorionTask {
         samtools bam2fq ~{inputBAM} > samtools.bam2fq.fastq
         samtools view -h -o samtools.view.sam ~{inputBAM}
 
-        /usr/local/src/Mandalorion/Mando.py \
+        python3 /usr/local/src/Mandalorion/Mando.py \
         -G ~{referenceGenome} \
         ~{"-g " + referenceAnnotation} \
         -f samtools.bam2fq.fastq \
