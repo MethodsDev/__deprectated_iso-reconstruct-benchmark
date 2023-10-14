@@ -19,15 +19,16 @@ task MandalorionTask {
     command <<<
         bash ~{monitoringScript} > monitoring.log &
 
- #       samtools bam2fq ~{inputBAM} > samtools.bam2fq.fastq
+        samtools bam2fq ~{inputBAM} > samtools.bam2fq.fastq
 
-        /usr/local/src/Mandalorion/utils/removePolyA.py -i ~{inputBAM} -o samtools.bam2fq.noPolyA.fastq -t 0,0
+        /usr/local/src/Mandalorion/utils/removePolyA.py -i samtools.bam2fq.fastq -o samtools.bam2fq.noPolyA.fastq -t 0,0
 
         /usr/local/src/Mandalorion/minimap2/misc/paftools.js gff2bed ~{referenceAnnotation} > anno.bed
         /usr/local/src/Mandalorion/minimap2/minimap2 -G 400k --secondary=no -uf -ax splice:hq --cs=long --junc-bed anno.bed -t ~{numThreads} ~{referenceGenome} samtools.bam2fq.noPolyA.fastq > samtools.view.sam
         
 
-#        rm samtools.bam2fq.fastq
+        rm samtools.bam2fq.fastq
+        rm samtools.bam2fq.noPolyA.fastq
         rm anno.bed
         samtools view -bS samtools.view.sam > "~{inputBAM}.bam"
         rm samtools.view.sam
