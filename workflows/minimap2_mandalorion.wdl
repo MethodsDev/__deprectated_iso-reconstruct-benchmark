@@ -19,18 +19,18 @@ task MandalorionTask {
     command <<<
         bash ~{monitoringScript} > monitoring.log &
 
-        samtools bam2fq ~{inputBAM} > samtools.bam2fq.fastq
+ #       samtools bam2fq ~{inputBAM} > samtools.bam2fq.fastq
         /usr/local/src/Mandalorion/minimap2/misc/paftools.js gff2bed ~{referenceAnnotation} > anno.bed
-        /usr/local/src/Mandalorion/minimap2/minimap2 -G 400k --secondary=no -uf -ax splice:hq --cs=long --junc-bed anno.bed -t ~{numThreads} ~{referenceGenome} samtools.bam2fq.fastq > samtools.view.sam
+        /usr/local/src/Mandalorion/minimap2/minimap2 -G 400k --secondary=no -uf -ax splice:hq --cs=long --junc-bed anno.bed -t ~{numThreads} ~{referenceGenome} ~{inputBAM} > samtools.view.sam
 
-        rm samtools.bam2fq.fastq
+#        rm samtools.bam2fq.fastq
         rm anno.bed
-        samtools view -bS samtools.view.sam > "~{inputBAM}"
+        samtools view -bS samtools.view.sam > "~{inputBAM}.bam"
         rm samtools.view.sam
     >>>
 
     output {
-        File bamfile = "~{inputBAM}"
+        File bamfile = "~{inputBAM}.bam"
         File monitoringLog = "monitoring.log"
     }
 
