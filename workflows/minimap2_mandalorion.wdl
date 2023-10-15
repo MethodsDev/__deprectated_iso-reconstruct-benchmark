@@ -19,10 +19,10 @@ task MandalorionTask {
     command <<<
         bash ~{monitoringScript} > monitoring.log &
 
-        samtools bam2fq ~{inputBAM} > samtools.bam2fq.fastq
-        sed -n '1~4s/^@/>/p;2~4p' samtools.bam2fq.fastq > samtools.bam2fq.fasta
+#        samtools bam2fq ~{inputBAM} > samtools.bam2fq.fastq
+#        sed -n '1~4s/^@/>/p;2~4p' samtools.bam2fq.fastq > samtools.bam2fq.fasta
 
-        python3 /usr/local/src/Mandalorion/utils/removePolyA_nonDirectionalInput.py -i samtools.bam2fq.fasta -o samtools.bam2fq.noPolyA.fasta -t 1,1
+        python3 /usr/local/src/Mandalorion/utils/removePolyA_nonDirectionalInput.py -i ~{inputBAM} -o samtools.bam2fq.noPolyA.fasta -t 1,1
 
         /usr/local/src/Mandalorion/minimap2/misc/paftools.js gff2bed ~{referenceAnnotation} > anno.bed
         /usr/local/src/Mandalorion/minimap2/minimap2 -G 400k --secondary=no -uf -ax splice:hq --cs=long --junc-bed anno.bed -t ~{numThreads} ~{referenceGenome} samtools.bam2fq.noPolyA.fasta > samtools.view.sam
