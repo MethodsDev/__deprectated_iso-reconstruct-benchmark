@@ -11,13 +11,24 @@ logger = logging.getLogger(__name__)
 
 UTILDIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../workflows/lr_isoform_custom_docker"))
 
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Experimental design: (see IsoQuant paper for details)
+#
+# A reduced reference gtf (by 20%) is used during isoform reconstruction by the methods
+# In the full reference gtf, the subset of isoforms that are expressed (have read support) are set to --ref_included_gtf
+# The subset of the expressed transcrips that were excluded via the reduced refernece gtf are set to --ref_excluded_gtf
+# - Those excluded expressed transcripts found reconstructed by the method are considered True Positives.
+# - Isoforms reconstructed that are entirely novel (missing from the --ref_included_gtf) are treated as False Positives.
+#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 def main():
     parser = argparse.ArgumentParser(description="run benchmarking for ref-based reconstruction where a subset of reference transcripts were withheld",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument("--ref_included_gtf", type=str, required=True, help="transcripts included during isoform reconstruction")
-    parser.add_argument("--ref_excluded_gtf", type=str, required=True, help="transcripts excluded during isoform reconstruction")
+    parser.add_argument("--ref_included_gtf", type=str, required=True, help="all expressed transcripts included during isoform reconstruction")
+    parser.add_argument("--ref_excluded_gtf", type=str, required=True, help="the expressed transcripts excluded during isoform reconstruction and examined here for benchmarking accuracy")
 
     parser.add_argument("--reco_gtfs", type=str, required=True, help="transcripts reconstructed by methods", nargs='+')
 
