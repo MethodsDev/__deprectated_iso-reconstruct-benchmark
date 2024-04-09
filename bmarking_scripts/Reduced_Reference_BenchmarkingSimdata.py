@@ -27,8 +27,8 @@ def main():
     parser = argparse.ArgumentParser(description="run benchmarking for ref-based reconstruction where a subset of reference transcripts were withheld",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument("--ref_included_gtf", type=str, required=True, help="all expressed transcripts included during isoform reconstruction")
-    parser.add_argument("--ref_excluded_gtf", type=str, required=True, help="the expressed transcripts excluded during isoform reconstruction and examined here for benchmarking accuracy")
+    parser.add_argument("--ref_expressed_gtf", type=str, required=True, help="all expressed transcripts included during isoform reconstruction")
+    parser.add_argument("--ref_expressed_kept_gtf", type=str, required=True, help="the expressed transcripts excluded during isoform reconstruction and examined here for benchmarking accuracy")
 
     parser.add_argument("--reco_gtfs", type=str, required=True, help="transcripts reconstructed by methods", nargs='+')
 
@@ -38,8 +38,8 @@ def main():
     args = parser.parse_args()
 
 
-    ref_included_gtf = os.path.abspath(args.ref_included_gtf)
-    ref_excluded_gtf = os.path.abspath(args.ref_excluded_gtf)
+    ref_expressed_gtf = os.path.abspath(args.ref_expressed_gtf)
+    ref_expressed_kept_gtf = os.path.abspath(args.ref_expressed_kept_gtf)
     reco_gtfs = args.reco_gtfs
     dataset_name = args.dataset_name
 
@@ -72,7 +72,7 @@ def main():
         if os.path.exists(tracking_file) and os.path.exists(checkpoint):
             continue
         
-        cmd = f"gffcompare -o {tool_basename} {ref_included_gtf} {ref_excluded_gtf} {reco_gtf}"
+        cmd = f"gffcompare -o {tool_basename} {ref_expressed_gtf} {ref_expressed_kept_gtf} {reco_gtf}"
         logger.info(cmd)
         subprocess.check_call(cmd, shell=True)
 
