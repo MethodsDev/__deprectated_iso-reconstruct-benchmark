@@ -23,6 +23,24 @@ UTILDIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../workflows/
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+#################################################
+## Definitions for categories:
+#
+#             in_ref_expr  in_ref_expr_kept  reco
+# novel_FN:      +                 -          -
+#
+# known_FN:      +                 +          -
+#
+# known_TP:      +                 +          +
+#
+# novel_TP:      +                 -          +
+#
+# novel_FP:      -                 -          +
+#
+#################################################
+
+
+
 def main():
     parser = argparse.ArgumentParser(description="run benchmarking for ref-based reconstruction where a subset of reference transcripts were withheld",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
