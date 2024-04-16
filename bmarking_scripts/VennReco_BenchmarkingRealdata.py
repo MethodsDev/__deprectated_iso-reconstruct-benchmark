@@ -17,7 +17,7 @@ UTILDIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../workflows/
 # Isoforms are reconstructed by various methods
 #
 # The subset of isoforms in the reference annotation that are identified as expressed: --ref_expressed_gtf
-# - Refernce transcripts reconstructed by the method are considered True Positives.
+# - Reference transcripts (you decide (if reduced reference, leverage the kept set for comparison of novel)
 # - Isoforms reconstructed that are entirely novel (missing from the --ref_expressed_gtf) are compared across different reco methods
 #
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -27,7 +27,7 @@ def main():
     parser = argparse.ArgumentParser(description="run benchmarking for reconstructions on real data examining known and novel isoforms reconstructed",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    parser.add_argument("--ref_expressed_gtf", type=str, required=True, help="all expressed reference isoforms (perhaps limit to a min TPM expr value)")
+    parser.add_argument("--ref_expressed_or_kept_gtf", type=str, required=True, help="reference isoforms to compare - you decide (if reduced reference, leverage the kept set for comparison of novel)")
 
     parser.add_argument("--reco_gtfs", type=str, required=True, help="transcripts reconstructed by methods", nargs='+')
 
@@ -37,7 +37,7 @@ def main():
     args = parser.parse_args()
 
 
-    ref_expressed_gtf = os.path.abspath(args.ref_expressed_gtf)
+    ref_gtf = os.path.abspath(args.ref_expressed_or_kept_gtf)
     reco_gtfs = args.reco_gtfs
     dataset_name = args.dataset_name
 
@@ -57,7 +57,7 @@ def main():
         tool_names.append(tool_basename)
 
         
-    cmd = f"gffcompare -o {tool_basename}.denovo {ref_expressed_gtf} " + " ".join(reco_gtfs)
+    cmd = f"gffcompare -o {tool_basename}.denovo {ref_gtf} " + " ".join(reco_gtfs)
     logger.info(cmd)
     subprocess.check_call(cmd, shell=True)
             
