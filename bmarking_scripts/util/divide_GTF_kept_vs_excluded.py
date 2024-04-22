@@ -39,7 +39,7 @@ def main():
     for transcript_id, gtf_txt in transcript_to_gtf_txt.items():
         
         ofh = ofh_kept if random.random() < frac_keep else ofh_excluded
-        print(gtf_txt, file=ofh)
+        print(gtf_txt, end='', file=ofh)
 
     sys.exit(0)
             
