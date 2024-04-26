@@ -1,12 +1,10 @@
-version 1.0
-
 task BambuTask {
     input {
         File inputBAM
         File inputBAMIndex
         File referenceGenome
         File referenceGenomeIndex
-        File referenceAnnotation
+        File? referenceAnnotation
         String datasetName
         String dataType
         Int cpu = 16
@@ -24,24 +22,51 @@ task BambuTask {
 
         mkdir ~{bambuOutDir}
 
-        Rscript -<< "EOF"
-        library(bambu)
-        fa.file <- "~{referenceGenome}"
-        gtf.file <- "~{referenceAnnotation}"
-        bambuAnnotations <- prepareAnnotations(gtf.file)
-        lr.bam <- "~{inputBAM}"
-        lr.se <- bambu(reads = lr.bam, rcOutDir = "~{bambuOutDir}", annotations = bambuAnnotations, genome = fa.file, ncore = ~{numThreads})
-        writeBambuOutput(lr.se, path = "~{bambuOutDir}")
-        EOF
+        if [ "~{referenceAnnotation}" != "" ]; then
+            Rscript -<< "EOF"
+            library(bambu)
+            fa.file <- "~{referenceGenome}"
+            gtf.file <- "~{referenceAnnotation}"
+            bambuAnnotations <- prepareAnnotations(gtf.file)
+            lr.bam <- "~{inputBAM}"
+            lr.se <- bambu(reads = lr.bam, rcOutDir = "~{bambuOutDir}", annotations = bambuAnnotations, genome = fa.file, ncore = ~{numThreads})
+            writeBambuOutput(lr.se, path = "~{bambuOutDir}")
+            EOF
 
-        awk ' $3 >= 1 ' ~{bambuOutDir}/counts_transcript.txt | sort -k3,3n > ~{bambuOutDir}/expressed_annotations.gtf.counts
-        cut -f1 ~{bambuOutDir}/expressed_annotations.gtf.counts > ~{bambuOutDir}/expressed_transcripts.txt
-        grep -Ff ~{bambuOutDir}/expressed_transcripts.txt ~{bambuOutDir}/extended_annotations.gtf > ~{bambuOutDir}/Bambu_out_~{datasetName}.gtf
+            awk ' $3 >= 1 ' ~{bambuOutDir}/counts_transcript.txt | sort -k3,3n > ~{bambuOutDir}/expressed_annotations.gtf.counts
+            cut -f1 ~{bambuOutDir}/expressed_annotations.gtf.counts > ~{bambuOutDir}/expressed_transcripts.txt
+            grep -Ff ~{bambuOutDir}/expressed_transcripts.txt ~{bambuOutDir}/extended_annotations.gtf > ~{bambuOutDir}/bambu.gtf
+            find ~{bambuOutDir} -type f ! -name 'bambu.gtf' -delete
+
+
+            Rscript -<< "EOF"
+            library(bambu)
+            fa.file <- "~{referenceGenome}"
+            gtf.file <- "~{referenceAnnotation}"
+            bambuAnnotations <- prepareAnnotations(gtf.file)
+            lr.bam <- "~{inputBAM}"
+            lr.se <- bambu(reads = lr.bam, rcOutDir = "~{bambuOutDir}", annotations = bambuAnnotations, genome = fa.file, ncore = ~{numThreads}, NDR = 1)
+            writeBambuOutput(lr.se, path = "~{bambuOutDir}")
+            EOF
+
+            awk ' $3 >= 1 ' ~{bambuOutDir}/counts_transcript.txt | sort -k3,3n > ~{bambuOutDir}/expressed_annotations.gtf.counts
+            cut -f1 ~{bambuOutDir}/expressed_annotations.gtf.counts > ~{bambuOutDir}/expressed_transcripts.txt
+            grep -Ff ~{bambuOutDir}/expressed_transcripts.txt ~{bambuOutDir}/extended_annotations.gtf > ~{bambuOutDir}/bambu_ndr1.gtf
+
+
+        else
+            Rscript -<< "EOF"
+            library(bambu)
+            fa.file <- "~{referenceGenome}"
+            lr.bam <- "~{inputBAM}"
+            lr.se <- bambu(reads = lr.bam, rcOutDir = '~{bambuOutDir}', annotations = NULL, genome = fa.file, quant = FALSE, NDR = 1, ncore = ~{numThreads})
+            writeToGTF(lr.se, path = "~{bambuOutDir}/bambu.gtf")
+            EOF
+        fi
     >>>
 
     output {
-        File bambuGTF = "~{bambuOutDir}/Bambu_out_~{datasetName}.gtf"
-        File bambuCounts = "~{bambuOutDir}/expressed_annotations.gtf.counts"
+        File bambuGTF = "~{bambuOutDir}/bambu.gtf"
         File monitoringLog = "monitoring.log"
     }
 
@@ -50,34 +75,5 @@ task BambuTask {
         memory: "~{memoryGB} GiB"
         disks: "local-disk ~{diskSizeGB} HDD"
         docker: docker
-    }
-}
-
-workflow Bambu {
-    input {
-        File inputBAM
-        File inputBAMIndex
-        File referenceGenome
-        File referenceGenomeIndex
-        File referenceAnnotation
-        String datasetName
-        String dataType
-    }
-
-    call BambuTask {
-        input:
-            inputBAM = inputBAM,
-            inputBAMIndex = inputBAMIndex,
-            referenceGenome = referenceGenome,
-            referenceGenomeIndex = referenceGenomeIndex,
-            referenceAnnotation = referenceAnnotation,
-            datasetName = datasetName,
-            dataType = dataType
-    }
-
-    output {
-        File bambuGTF = BambuTask.bambuGTF
-        File bambuCounts = BambuTask.bambuCounts
-        File monitoringLog = BambuTask.monitoringLog
     }
 }
