@@ -66,25 +66,28 @@ task BambuTask {
                 lr.se <- bambu(reads = lr.bam, rcOutDir = '~{bambuOutDir}', annotations = NULL, genome = fa.file, quant = FALSE, NDR = 1, ncore = ~{numThreads})
                 writeToGTF(lr.se, path = "~{bambuOutDir}/Bambu.gtf")
                 EOF
+
+                find ~{bambuOutDir} -type f ! -name 'Bambu.gtf' -delete
             fi
         fi
 
         if [ "~{ID_or_Quant_or_Both}" == "Quant" ] || [ "~{ID_or_Quant_or_Both}" == "Both" ]; then
             Rscript -<< "EOF"
             library(bambu)
-            test.bam <- "{sample_name}.mapped.sorted.bam"
-            fa.file <- "{genome}"
-            gtf.file <- "{referenceAnnotation_full}"
+            test.bam <- "~{inputBAM}"
+            fa.file <- "~{referenceGenome}"
+            gtf.file <- "~{referenceAnnotation_full}"
             se.quantOnly <- bambu(reads = test.bam, annotations = gtf.file, genome = fa.file, discovery = FALSE)
-            writeBambuOutput(se.quantOnly, path = "{output_dir}/{sample_name}")
+            writeBambuOutput(se.quantOnly, path = "~{bambuOutDir}")
             EOF
         fi
 
-        find ~{bambuOutDir} -type f ! -name 'bambu.gtf' -delete
     >>>
 
     output {
-        File bambuGTF = "~{bambuOutDir}/bambu.gtf"
+        File bambuReducedGTF = "~{bambuOutDir}/Bambu_reduced.gtf"
+        File bambuNDR1ReducedGTF = "~{bambuOutDir}/Bambu_ndr1_reduced.gtf"
+        File countsTranscript = "~{bambuOutDir}/counts_transcript.txt"
         File monitoringLog = "monitoring.log"
     }
 
