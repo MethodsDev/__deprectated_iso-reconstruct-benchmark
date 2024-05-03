@@ -48,7 +48,7 @@ task oarfishTask {
     >>>
 
     output {
-        File oarfishCounts = "~{OutDir}/Oarfish_quant.tsv"
+        File? oarfishCounts = "~{OutDir}/Oarfish_quant.tsv"
         File monitoringLog = "monitoring.log"
     }
 
