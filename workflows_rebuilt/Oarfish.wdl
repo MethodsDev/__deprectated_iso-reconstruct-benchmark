@@ -98,7 +98,7 @@ workflow oarfishWorkflow {
     }
 
     output {
-        File oarfishCounts = oarfishTask.oarfishCounts
+        File? oarfishCounts = oarfishTask.oarfishCounts
         File monitoringLog = oarfishTask.monitoringLog
     }
 }
