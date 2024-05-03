@@ -96,8 +96,8 @@ workflow espressoWorkflow {
     }
 
     output {
-        File? espressoCounts = EspressoTask.espressoCounts
-        File? espressoReducedGTF = EspressoTask.espressoReducedGTF
-        File monitoringLog = EspressoTask.monitoringLog
+        File? espressoCounts = espressoTask.espressoCounts
+        File? espressoReducedGTF = espressoTask.espressoReducedGTF
+        File monitoringLog = espressoTask.monitoringLog
     }
 }
