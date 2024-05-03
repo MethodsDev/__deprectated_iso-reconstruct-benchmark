@@ -1,6 +1,6 @@
 version: 1.2
 workflows:
-  - name: Isoform_id_quant_benchmarking
+  - name: isoform_id_quant_benchmarking
     subclass: WDL
     primaryDescriptorPath: /workflows_rebuilt/Isoform_ID_Quant_Benchmarking.wdl
   - name: isoquant
