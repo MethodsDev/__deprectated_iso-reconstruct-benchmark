@@ -1,3 +1,7 @@
+
+
+>Moved to using https://github.com/MethodsDev/iso-reconstruct-benchmark2
+
 # iso-reconstruct-benchmark
 
 Methods for benchmarking isoform reconstruction using long reads. Our initial efforts attempt to leverage the IsoQuant benchmarking data and methods, but we are expanding our analytics to other frameworks too.
